@@ -20,4 +20,4 @@
 
 ![max value](public/assets/valueIsMoreThan1600.png)
 
-![mandatory](public/assets/allFieldsAremandatory.png)
+![mandatory](public/assets/allFieldAremandatory.png)
