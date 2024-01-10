@@ -12,8 +12,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 
 function StudentEntryModal(props) {
-  const { open, setOpen } = props;
-  const [totalStudentList, setTotalStudentList] = useState([]);
+  const { open, setOpen, data, index, type } = props;
   const name = useRef();
   const address = useRef();
   const city = useRef();
@@ -78,16 +77,41 @@ function StudentEntryModal(props) {
         status: true,
         message: "Added successfully",
       });
+      setTimeout(() => {
+        handleClose();
+      }, [500]);
     } else {
       setErrorSubmission("All fields are mandatory");
     }
+  };
+  const handleUpdate = (e) => {
+    e.preventDefault();
+
+    const finalValue = {
+      name: name.current.value,
+      address: address.current.value,
+      country: country.current.value,
+      city: city.current.value,
+      pincode: pincode.current.value,
+      score: score.current.value,
+      isPass: checkPass(score.current.value),
+    };
+    currentStudentList[index] = finalValue;
+    localStorage.setItem("studentList", JSON.stringify(currentStudentList));
+    setSuccess({
+      status: true,
+      message: "Edited successfully",
+    });
+    setTimeout(() => {
+      handleClose();
+    }, [500]);
   };
 
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="subheading" component="h4">
-          Enter the student informations
+          {type !== "edit" ? "Enter" : "Edit"} the student informations
         </Typography>
         <Grid onClick={handleClose} sx={{ cursor: "pointer" }}>
           <CloseIcon />
@@ -115,6 +139,7 @@ function StudentEntryModal(props) {
                 name.current.value === "" &&
                 errorSubmission
               }
+              defaultValue={type === "edit" ? data?.name : null}
             />
             <TextField
               varient="standard"
@@ -135,6 +160,7 @@ function StudentEntryModal(props) {
                 address.current.value === "" &&
                 errorSubmission
               }
+              defaultValue={type === "edit" ? data?.address : null}
             />
             <TextField
               varient="standard"
@@ -155,6 +181,7 @@ function StudentEntryModal(props) {
                 city.current.value === "" &&
                 errorSubmission
               }
+              defaultValue={type === "edit" ? data?.city : null}
             />
             <TextField
               varient="standard"
@@ -175,6 +202,7 @@ function StudentEntryModal(props) {
                 country.current.value === "" &&
                 errorSubmission
               }
+              defaultValue={type === "edit" ? data?.country : null}
             />
             <TextField
               varient="standard"
@@ -195,6 +223,7 @@ function StudentEntryModal(props) {
                 pincode.current.value === "" &&
                 errorSubmission
               }
+              defaultValue={type === "edit" ? data?.pincode : null}
             />
             <TextField
               varient="standard"
@@ -220,6 +249,7 @@ function StudentEntryModal(props) {
                   ? true
                   : false
               }
+              defaultValue={type === "edit" ? data?.score : null}
             />
           </form>
           <p style={{ color: "green" }}>
@@ -229,10 +259,12 @@ function StudentEntryModal(props) {
             type="submit"
             fullWidth
             variant="contained"
-            onClick={(event) => handleSubmission(event)}
+            onClick={(event) =>
+              type !== "edit" ? handleSubmission(event) : handleUpdate(event)
+            }
             style={{ marginTop: "20px" }}
           >
-            {"Submit"}
+            {type === "edit" ? "Save" : "Submit"}
           </Button>
         </Container>
       </DialogContent>

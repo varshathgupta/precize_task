@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Grid } from "@mui/material";
 import "./App.css";
 import Header from "./components/Header";
-import Dashboard from "./components/Dashboard";
-import ViewData from "./components/ViewData";
+import Dashboard from "./pages/Dashboard";
+import ViewData from "./pages/ViewData";
 
 function App() {
   return (

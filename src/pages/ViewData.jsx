@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button, Container, Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import StudentEntryModal from "./StudentEntryModal";
-import DataSection from "./DataSection";
+import StudentEntryModal from "../components/StudentEntryModal";
+import DataSection from "../components/DataSection";
 
 function ViewData() {
   const [openStudentForm, setOpenStudentForm] = useState(false);
